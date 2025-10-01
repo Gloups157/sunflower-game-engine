@@ -1,5 +1,7 @@
 #include "../../../include/engine/core/Engine.h"
 
+#include "engine/core/input/InputGLFW.h"
+
 // TEST VARIABLES --------------------------------------------------------
 
 bool wireframeMode = false;
@@ -77,15 +79,15 @@ glm::vec3 cubePositions[] = {
 
 // -----------------------------------------------------------------------
 
-Engine::Engine(int screenWidth, int screenHeight, const char* title):
-    time(new Time()),
-    window(new WindowGLFW(screenWidth, screenWidth, title)),
-    input(new InputGLFW()) {
-    window->initialize();
-    input->initialize(window->getNative());
-    AInput::registerKeyCallback(window, WindowGLFW::closeCallback);
-    AInput::registerKeyCallback(window, WindowGLFW::polygonModeCallback);
+Engine::Engine(int screenWidth, int screenHeight, const char* title) {
+    EWindowBackend windowBackend = EWindowBackend::GLFW;
+    AWindow* window = WindowFactory::create(windowBackend, screenWidth, screenHeight, title);
+    AInput* input = InputFactory::create(windowBackend, window);
+    context = new Context(new Time(), window, input);
+    AInput::registerKeyCallback(window, &AWindow::closeCallback);
+    AInput::registerKeyCallback(window, &AWindow::polygonModeCallback);
     camera = new Camera();
+    camera->initialize(context);
 }
 
 void Engine::run() {
@@ -120,11 +122,11 @@ void Engine::run() {
     glEnableVertexAttribArray(1);
 
     glm::mat4 model = glm::mat4(1.0f);
-    while(window->isActive())
+    while(context->window->isActive())
     {
-        time->tick();
-        input->update();
-        window->clear();
+        context->time->tick();
+        context->input->update();
+        context->window->clear();
 
         texture1.use(GL_TEXTURE0);
         texture2.use(GL_TEXTURE1);
@@ -144,10 +146,10 @@ void Engine::run() {
             shader.setMat4("model", model);
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
-        window->draw();
+        context->window->draw();
     }
 }
 
 void Engine::quit() {
-    window->quit();
+    context->window->quit();
 }

@@ -1,12 +1,12 @@
-#ifndef MOUSE_BUTTON_H
-#define MOUSE_BUTTON_H
+#ifndef E_MOUSE_BUTTON_H
+#define E_MOUSE_BUTTON_H
 
 #include <GLFW/glfw3.h>
 
-enum class MouseButton {
+enum class EMouseButton {
     LEFT = GLFW_MOUSE_BUTTON_LEFT,
     MIDDLE = GLFW_MOUSE_BUTTON_MIDDLE,
     RIGHT = GLFW_MOUSE_BUTTON_RIGHT,
 };
 
-#endif //MOUSE_BUTTON_H
+#endif //E_MOUSE_BUTTON_H

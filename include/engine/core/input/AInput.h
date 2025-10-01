@@ -3,14 +3,13 @@
 
 #include <functional>
 #include <glm/vec2.hpp>
-#include "../window/WindowGLFW.h"
 #include "../Time.h"
-#include "Key.h"
+#include "EKey.h"
 #include "InputInfo.h"
-#include "MouseButton.h"
+#include "EMouseButton.h"
 
-using keyCallback = std::function<void(Key)>;
-using mouseButtonCallback = std::function<void(MouseButton)>;
+using keyCallback = std::function<void(EKey)>;
+using mouseButtonCallback = std::function<void(EMouseButton)>;
 using mousePositionCallback = std::function<void(float, float)>;
 using mouseDeltaCallback = std::function<void(float, float)>;
 using mouseScrollCallback = std::function<void(float, float)>;
@@ -34,14 +33,14 @@ public:
         mouseScrollCallbacks.push_back(callback);
     }
     template<typename T>
-    static void registerKeyCallback(T* object, void (T::*method)(Key key)) {
-        keyCallbacks.push_back([object, method](Key key) {
+    static void registerKeyCallback(T* object, void (T::*method)(EKey key)) {
+        keyCallbacks.push_back([object, method](EKey key) {
             (object->*method)(key);
         });
     }
     template<typename T>
-    static void registerMouseButtonCallback(T* object, void (T::*method)(MouseButton mouse)) {
-        mouseButtonCallbacks.push_back([object, method](MouseButton mouse) {
+    static void registerMouseButtonCallback(T* object, void (T::*method)(EMouseButton mouse)) {
+        mouseButtonCallbacks.push_back([object, method](EMouseButton mouse) {
             (object->*method)(mouse);
         });
     }
@@ -70,56 +69,56 @@ public:
         mousePositionLastY = 300.0f;
         mouseScrollX = 0.0f;
         mouseScrollY = 0.0f;
-        for (int i = static_cast<int>(Key::A); i <= static_cast<int>(Key::UNKNOWN); ++i) {
-            auto key = static_cast<Key>(i);
+        for (int i = static_cast<int>(EKey::A); i <= static_cast<int>(EKey::UNKNOWN); ++i) {
+            auto key = static_cast<EKey>(i);
             keys[key] = new InputInfo();
         }
-        for (int i = static_cast<int>(MouseButton::LEFT); i <= static_cast<int>(MouseButton::RIGHT); ++i) {
-            auto mouseButton = static_cast<MouseButton>(i);
+        for (int i = static_cast<int>(EMouseButton::LEFT); i <= static_cast<int>(EMouseButton::RIGHT); ++i) {
+            auto mouseButton = static_cast<EMouseButton>(i);
             mouseButtons[mouseButton] = new InputInfo();
         }
     }
     virtual void update() = 0;
-    static bool isKeyIdle(const Key key) {
-        return keys.find(key)->second->state == InputState::IDLE;
+    static bool isKeyIdle(const EKey key) {
+        return keys.find(key)->second->state == EInputState::IDLE;
     }
-    static bool isKeyPressed(const Key key) {
-        return keys.find(key)->second->state == InputState::PRESSED;
+    static bool isKeyPressed(const EKey key) {
+        return keys.find(key)->second->state == EInputState::PRESSED;
     }
-    static bool isKeyRepeated(const Key key) {
-        return keys.find(key)->second->state == InputState::REPEATED;
+    static bool isKeyRepeated(const EKey key) {
+        return keys.find(key)->second->state == EInputState::REPEATED;
     }
-    static bool isKeyHeld(const Key key) {
-        return keys.find(key)->second->state == InputState::HELD;
+    static bool isKeyHeld(const EKey key) {
+        return keys.find(key)->second->state == EInputState::HELD;
     }
-    static bool isKeyReleased(const Key key) {
-        return keys.find(key)->second->state == InputState::RELEASED;
+    static bool isKeyReleased(const EKey key) {
+        return keys.find(key)->second->state == EInputState::RELEASED;
     }
-    static bool isKeyUnknow(const Key key) {
-        return keys.find(key)->second->state == InputState::UNKNOWN;
+    static bool isKeyUnknow(const EKey key) {
+        return keys.find(key)->second->state == EInputState::UNKNOWN;
     }
-    static bool isKeyHeldSince(const Key key, const float time) {
+    static bool isKeyHeldSince(const EKey key, const float time) {
         return keys.find(key)->second->heldTime == time;
     }
-    static float getKeyHeldTime(const Key key) {
+    static float getKeyHeldTime(const EKey key) {
         return keys.find(key)->second->heldTime;
     }
-    float getMousePositionX() const {
+    static float getMousePositionX() {
         return mousePositionX;
     }
-    float getMousePositionY() const {
+    static float getMousePositionY() {
         return mousePositionY;
     }
-    float getMouseDeltaX() const {
+    static float getMouseDeltaX() {
         return mousePositionLastX - mousePositionX;
     }
-    float getMouseDeltaY() const {
+    static float getMouseDeltaY() {
         return mousePositionLastY - mousePositionY;
     }
-    glm::vec2 getMousePosition() const {
+    static glm::vec2 getMousePosition() {
         return {mousePositionX, mousePositionY};
     }
-    glm::vec2 getMouseDelta() const {
+    static glm::vec2 getMouseDelta() {
         return {getMouseDeltaX(), getMouseDeltaY()};
     }
 protected:
@@ -129,8 +128,8 @@ protected:
     static float mousePositionLastY;
     static float mouseScrollX;
     static float mouseScrollY;
-    static std::unordered_map<Key, InputInfo*> keys;
-    static std::unordered_map<MouseButton, InputInfo*> mouseButtons;
+    static std::unordered_map<EKey, InputInfo*> keys;
+    static std::unordered_map<EMouseButton, InputInfo*> mouseButtons;
     static std::vector<keyCallback> keyCallbacks;
     static std::vector<mouseButtonCallback> mouseButtonCallbacks;
     static std::vector<mousePositionCallback> mousePositionCallbacks;

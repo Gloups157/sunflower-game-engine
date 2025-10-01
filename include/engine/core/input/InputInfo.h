@@ -1,43 +1,43 @@
 #ifndef INPUT_INFO_H
 #define INPUT_INFO_H
 
-#include "InputState.h"
+#include "EInputState.h"
 
 struct InputInfo {
-    InputState state;
+    EInputState state;
     float heldTime;
 
-    InputInfo(): state(InputState::IDLE), heldTime(0.0f) {}
+    InputInfo(): state(EInputState::IDLE), heldTime(0.0f) {}
 
-    void update(InputState newState) {
+    void update(EInputState newState) {
         switch (newState) {
-            case InputState::IDLE:
-                state = InputState::IDLE;
+            case EInputState::IDLE:
+                state = EInputState::IDLE;
                 break;
-            case InputState::PRESSED:
-                if (state == InputState::PRESSED) {
-                    state = InputState::HELD;
+            case EInputState::PRESSED:
+                if (state == EInputState::PRESSED) {
+                    state = EInputState::HELD;
                     //heldTime += Time::getDeltaTime();
                 }
-                if (state == InputState::IDLE) {
-                    state = InputState::PRESSED;
+                if (state == EInputState::IDLE) {
+                    state = EInputState::PRESSED;
                 }
                 break;
-            case InputState::REPEATED:
-                state = InputState::REPEATED;
+            case EInputState::REPEATED:
+                state = EInputState::REPEATED;
                 break;
-            case InputState::HELD:
-                state = InputState::HELD;
+            case EInputState::HELD:
+                state = EInputState::HELD;
                 //heldTime += Time::getDeltaTime();
                 break;
-            case InputState::RELEASED:
-                if (state == InputState::RELEASED) {
-                    state = InputState::IDLE;
+            case EInputState::RELEASED:
+                if (state == EInputState::RELEASED) {
+                    state = EInputState::IDLE;
                     heldTime = 0.0f;
                 }
                 break;
             default:
-                state = InputState::UNKNOWN;
+                state = EInputState::UNKNOWN;
                 heldTime = 0.0f;
                 break;
         }

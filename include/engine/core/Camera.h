@@ -7,13 +7,15 @@
 #include <glm/glm.hpp>
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/ext/matrix_clip_space.hpp>
-#include "input/AInput.h"
+#include "AContextObject.h"
 #include "Time.h"
+#include "engine/core/window/AWindow.h"
+#include "input/AInput.h"
 
-class Camera {
+class Camera : public AContextObject {
 public:
     Camera();
-    void initialize();
+    void initialize(Context* context) override;
     glm::mat4 view();
     glm::mat4 project();
 
@@ -26,7 +28,7 @@ private:
     glm::vec3 frontDirection;
     glm::vec3 upDirection;
 
-    void move(Key key);
+    void move(EKey key);
     void look(float x, float y);
     void zoom(float x, float y);
 };

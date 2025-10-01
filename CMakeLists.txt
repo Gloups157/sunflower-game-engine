@@ -21,15 +21,21 @@ add_executable(xp src/main.cpp src/tiers/glad/glad.c
         include/engine/core/input/AInput.h
         src/engine/core/Time.cpp
         include/engine/core/Time.h
-        include/engine/core/input/Key.h
+        include/engine/core/input/EKey.h
         include/engine/core/input/InputInfo.h
-        include/engine/core/input/InputState.h
-        include/engine/core/input/MouseButton.h
+        include/engine/core/input/EInputState.h
+        include/engine/core/input/EMouseButton.h
         src/engine/core/window/WindowGLFW.cpp
         include/engine/core/window/WindowGLFW.h
         include/engine/core/window/WindowSettings.h
         src/engine/core/input/InputGLFW.cpp
         include/engine/core/input/InputGLFW.h
+        include/engine/core/Context.h
+        include/engine/core/window/EWindowBackend.h
+        include/engine/core/window/WindowFactory.h
+        include/engine/core/input/InputFactory.h
+        include/engine/core/AContextObject.h
+        src/engine/core/input/AInput.cpp
 )
 
 target_link_libraries(xp glfw)

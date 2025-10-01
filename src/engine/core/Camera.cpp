@@ -8,10 +8,10 @@ Camera::Camera():
     position(0.0f, 0.0f, 3.0f),
     frontDirection(0.0f, 0.0f, -1.0f),
     upDirection(0.0f, 1.0f, 0.0f) {
-    initialize();
 }
 
-void Camera::initialize() {
+void Camera::initialize(Context* context) {
+    AContextObject::initialize(context);
     AInput::registerKeyCallback(this, &Camera::move);
     AInput::registerMouseDeltaCallback(this, &Camera::look);
     AInput::registerMouseScrollCallback(this, &Camera::zoom);
@@ -22,28 +22,28 @@ glm::mat4 Camera::view() {
 }
 
 glm::mat4 Camera::project() {
-    return glm::perspective(glm::radians(fov), AWindow::getRatio(), 0.1f, 100.0f);
+    return glm::perspective(glm::radians(fov), context->window->getRatio(), 0.1f, 100.0f);
 }
 
-void Camera::move(Key key) {
-    const float cameraSpeed = speed * Time::getDeltaTime();
+void Camera::move(EKey key) {
+    const float cameraSpeed = speed * context->time->getDeltaTime();
     switch (key) {
-        case Key::W:
+        case EKey::W:
             position += cameraSpeed * frontDirection;
             break;
-        case Key::S:
+        case EKey::S:
             position -= cameraSpeed * frontDirection;
             break;
-        case Key::A:
+        case EKey::A:
             position -= glm::normalize(glm::cross(frontDirection, upDirection)) * cameraSpeed;
             break;
-        case Key::D:
+        case EKey::D:
             position += glm::normalize(glm::cross(frontDirection, upDirection)) * cameraSpeed;
             break;
-        case Key::SPACE:
+        case EKey::SPACE:
             position += cameraSpeed * upDirection;
             break;
-        case Key::CONTROL:
+        case EKey::CONTROL:
             position -= cameraSpeed * upDirection;
             break;
     }

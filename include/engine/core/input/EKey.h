@@ -1,7 +1,7 @@
-#ifndef KEY_H
-#define KEY_H
+#ifndef E_KEY_H
+#define E_KEY_H
 
-enum class Key {
+enum class EKey {
     // Alphabet
     A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z,
     // Specials
@@ -9,4 +9,4 @@ enum class Key {
     UNKNOWN
 };
 
-#endif //KEY_H
+#endif //E_KEY_H

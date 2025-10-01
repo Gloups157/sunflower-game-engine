@@ -5,7 +5,7 @@
 #include <ostream>
 #include "WindowSettings.h"
 #include "../input/AInput.h"
-#include "../input/Key.h"
+#include "../input/EKey.h"
 
 class AWindow {
 public:
@@ -15,8 +15,8 @@ public:
     virtual void draw() = 0;
     virtual void quit() = 0;
     virtual bool isActive() = 0;
-    virtual void closeCallback(Key key) = 0;
-    virtual void polygonModeCallback(Key key) = 0;
+    virtual void closeCallback(EKey key) = 0;
+    virtual void polygonModeCallback(EKey key) = 0;
     virtual void* getNative() = 0;
     int getScreenWidth() const {
         return windowSettings->screenWidth;

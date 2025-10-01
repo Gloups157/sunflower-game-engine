@@ -2,9 +2,9 @@
 #define WINDOW_GLFW_H
 
 #include "AWindow.h"
+#include "tiers/glad/glad.h"
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
-#include "tiers/glad/glad.h"
 
 class WindowGLFW : public AWindow {
 public:
@@ -13,8 +13,8 @@ public:
     void clear() override;
     void draw() override;
     void quit() override;
-    void closeCallback(Key key) override;
-    void polygonModeCallback(Key key) override;
+    void closeCallback(EKey key) override;
+    void polygonModeCallback(EKey key) override;
     bool isActive() override;
     void* getNative() override;
 private:

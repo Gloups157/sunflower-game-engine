@@ -15,7 +15,7 @@ void InputGLFW::update() {
 }
 
 void InputGLFW::updateKeyCallbacks(GLFWwindow* window, int key, int scancode, int action, int mods) {
-    Key keyTranslated = translateGLFWKey(key);
+    EKey keyTranslated = translateGLFWKey(key);
     auto keyInfo = keys.find(keyTranslated)->second;
     keyInfo->update(translateGLFWInputState(action));
     for (auto& callback : keyCallbacks) {
@@ -24,7 +24,7 @@ void InputGLFW::updateKeyCallbacks(GLFWwindow* window, int key, int scancode, in
 }
 
 void InputGLFW::updateMouseButtonCallbacks(GLFWwindow *window, int button, int action, int mods) {
-    auto mouseButton = static_cast<MouseButton>(button);
+    auto mouseButton = static_cast<EMouseButton>(button);
     auto mouseButtonInfo = mouseButtons.find(mouseButton)->second;
     mouseButtonInfo->update(translateGLFWInputState(action));
     for (auto& callback : mouseButtonCallbacks) {
@@ -57,54 +57,54 @@ void InputGLFW::updateMouseScrollCallbacks(GLFWwindow* window, double xoffset, d
     }
 }
 
-Key InputGLFW::translateGLFWKey(const int key) {
+EKey InputGLFW::translateGLFWKey(const int key) {
     switch (key) {
         // Alphabet
-        case GLFW_KEY_A: return Key::A;
-        case GLFW_KEY_B: return Key::B;
-        case GLFW_KEY_C: return Key::C;
-        case GLFW_KEY_D: return Key::D;
-        case GLFW_KEY_E: return Key::E;
-        case GLFW_KEY_F: return Key::F;
-        case GLFW_KEY_G: return Key::G;
-        case GLFW_KEY_H: return Key::H;
-        case GLFW_KEY_I: return Key::I;
-        case GLFW_KEY_J: return Key::J;
-        case GLFW_KEY_K: return Key::K;
-        case GLFW_KEY_L: return Key::L;
-        case GLFW_KEY_M: return Key::M;
-        case GLFW_KEY_N: return Key::N;
-        case GLFW_KEY_O: return Key::O;
-        case GLFW_KEY_P: return Key::P;
-        case GLFW_KEY_Q: return Key::Q;
-        case GLFW_KEY_R: return Key::R;
-        case GLFW_KEY_S: return Key::S;
-        case GLFW_KEY_T: return Key::T;
-        case GLFW_KEY_U: return Key::U;
-        case GLFW_KEY_V: return Key::V;
-        case GLFW_KEY_W: return Key::W;
-        case GLFW_KEY_X: return Key::X;
-        case GLFW_KEY_Y: return Key::Y;
-        case GLFW_KEY_Z: return Key::Z;
+        case GLFW_KEY_A: return EKey::A;
+        case GLFW_KEY_B: return EKey::B;
+        case GLFW_KEY_C: return EKey::C;
+        case GLFW_KEY_D: return EKey::D;
+        case GLFW_KEY_E: return EKey::E;
+        case GLFW_KEY_F: return EKey::F;
+        case GLFW_KEY_G: return EKey::G;
+        case GLFW_KEY_H: return EKey::H;
+        case GLFW_KEY_I: return EKey::I;
+        case GLFW_KEY_J: return EKey::J;
+        case GLFW_KEY_K: return EKey::K;
+        case GLFW_KEY_L: return EKey::L;
+        case GLFW_KEY_M: return EKey::M;
+        case GLFW_KEY_N: return EKey::N;
+        case GLFW_KEY_O: return EKey::O;
+        case GLFW_KEY_P: return EKey::P;
+        case GLFW_KEY_Q: return EKey::Q;
+        case GLFW_KEY_R: return EKey::R;
+        case GLFW_KEY_S: return EKey::S;
+        case GLFW_KEY_T: return EKey::T;
+        case GLFW_KEY_U: return EKey::U;
+        case GLFW_KEY_V: return EKey::V;
+        case GLFW_KEY_W: return EKey::W;
+        case GLFW_KEY_X: return EKey::X;
+        case GLFW_KEY_Y: return EKey::Y;
+        case GLFW_KEY_Z: return EKey::Z;
 
         // Specials
-        case GLFW_KEY_ESCAPE: return Key::ESCAPE;
-        case GLFW_KEY_TAB: return Key::TAB;
-        case GLFW_KEY_ENTER: return Key::ENTER;
-        case GLFW_KEY_LEFT_SHIFT: return Key::SHIFT;
-        case GLFW_KEY_RIGHT_SHIFT: return Key::SHIFT;
-        case GLFW_KEY_LEFT_CONTROL: return Key::CONTROL;
-        case GLFW_KEY_SPACE: return Key::SPACE;
+        case GLFW_KEY_ESCAPE: return EKey::ESCAPE;
+        case GLFW_KEY_TAB: return EKey::TAB;
+        case GLFW_KEY_ENTER: return EKey::ENTER;
+        case GLFW_KEY_LEFT_SHIFT: return EKey::SHIFT;
+        case GLFW_KEY_RIGHT_SHIFT: return EKey::SHIFT;
+        case GLFW_KEY_LEFT_CONTROL: return EKey::CONTROL;
+        case GLFW_KEY_SPACE: return EKey::SPACE;
 
-        default: return Key::UNKNOWN;
+        default: return EKey::UNKNOWN;
     }
 }
 
-InputState InputGLFW::translateGLFWInputState(const int state) {
+EInputState InputGLFW::translateGLFWInputState(const int state) {
     switch (state) {
-        case GLFW_RELEASE: return InputState::RELEASED;
-        case GLFW_PRESS: return InputState::PRESSED;
-        case GLFW_REPEAT: return InputState::REPEATED;
-        default: return InputState::UNKNOWN;
+        case GLFW_RELEASE: return EInputState::RELEASED;
+        case GLFW_PRESS: return EInputState::PRESSED;
+        case GLFW_REPEAT: return EInputState::REPEATED;
+        default: return EInputState::UNKNOWN;
     }
 }

@@ -7,11 +7,9 @@
 #include <glm/gtc/type_ptr.hpp>
 #include "../include/tiers/glad/glad.h"
 #include "GLFW/glfw3.h"
-#include "Time.h"
-#include "window/AWindow.h"
-#include "window/WindowGLFW.h"
-#include "input/AInput.h"
-#include "input/InputGLFW.h"
+#include "Context.h"
+#include "window/WindowFactory.h"
+#include "input//InputFactory.h"
 #include "Camera.h"
 #include "engine/graphics/Shader.h"
 #include "engine/graphics/Texture.h"
@@ -22,9 +20,7 @@ public:
     void run();
     void quit();
 private:
-    Time* time;
-    AWindow* window;
-    AInput* input;
+    Context* context;
     Camera* camera;
 };
 

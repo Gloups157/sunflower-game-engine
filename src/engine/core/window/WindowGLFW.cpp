@@ -49,14 +49,14 @@ void WindowGLFW::framebufferSizeCallback(GLFWwindow* window, int width, int heig
     glViewport(0, 0, width, height);
 }
 
-void WindowGLFW::closeCallback(Key key) {
-    if(key == Key::ESCAPE) {
+void WindowGLFW::closeCallback(EKey key) {
+    if(key == EKey::ESCAPE) {
         glfwSetWindowShouldClose(native, true);
     }
 }
 
-void WindowGLFW::polygonModeCallback(Key key) {
-    if(key == Key::TAB) {
+void WindowGLFW::polygonModeCallback(EKey key) {
+    if(key == EKey::TAB) {
         if (windowSettings->wireframeMode) {
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
             windowSettings->wireframeMode = false;
