@@ -8,28 +8,28 @@
 #include "InputInfo.h"
 #include "EMouseButton.h"
 
-using keyCallback = std::function<void(EKey)>;
-using mouseButtonCallback = std::function<void(EMouseButton)>;
-using mousePositionCallback = std::function<void(float, float)>;
-using mouseDeltaCallback = std::function<void(float, float)>;
-using mouseScrollCallback = std::function<void(float, float)>;
+using KeyCallback = std::function<void(EKey)>;
+using MouseButtonCallback = std::function<void(EMouseButton)>;
+using MousePositionCallback = std::function<void(float, float)>;
+using MouseDeltaCallback = std::function<void(float, float)>;
+using MouseScrollCallback = std::function<void(float, float)>;
 
 class AInput {
 public:
     virtual ~AInput() = default;
-    static void registerKeyCallback(const keyCallback& callback) {
+    static void registerKeyCallback(const KeyCallback& callback) {
         keyCallbacks.push_back(callback);
     }
-    static void registerMouseButtonCallback(const mouseButtonCallback &callback) {
+    static void registerMouseButtonCallback(const MouseButtonCallback &callback) {
         mouseButtonCallbacks.push_back(callback);
     }
-    static void registerMousePositionCallback(const mousePositionCallback& callback) {
+    static void registerMousePositionCallback(const MousePositionCallback& callback) {
         mousePositionCallbacks.push_back(callback);
     }
-    static void registerMouseDeltaCallback(const mouseDeltaCallback& callback) {
+    static void registerMouseDeltaCallback(const MouseDeltaCallback& callback) {
         mouseDeltaCallbacks.push_back(callback);
     }
-    static void registerMouseScrollCallback(const mouseScrollCallback& callback) {
+    static void registerMouseScrollCallback(const MouseScrollCallback& callback) {
         mouseScrollCallbacks.push_back(callback);
     }
     template<typename T>
@@ -130,11 +130,11 @@ protected:
     static float mouseScrollY;
     static std::unordered_map<EKey, InputInfo*> keys;
     static std::unordered_map<EMouseButton, InputInfo*> mouseButtons;
-    static std::vector<keyCallback> keyCallbacks;
-    static std::vector<mouseButtonCallback> mouseButtonCallbacks;
-    static std::vector<mousePositionCallback> mousePositionCallbacks;
-    static std::vector<mouseDeltaCallback> mouseDeltaCallbacks;
-    static std::vector<mouseScrollCallback> mouseScrollCallbacks;
+    static std::vector<KeyCallback> keyCallbacks;
+    static std::vector<MouseButtonCallback> mouseButtonCallbacks;
+    static std::vector<MousePositionCallback> mousePositionCallbacks;
+    static std::vector<MouseDeltaCallback> mouseDeltaCallbacks;
+    static std::vector<MouseScrollCallback> mouseScrollCallbacks;
 
     // virtual Key translateKey(int key) = 0;
     // virtual InputState translateInputState(int state) = 0;

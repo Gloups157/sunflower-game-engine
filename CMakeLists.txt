@@ -36,6 +36,18 @@ add_executable(xp src/main.cpp src/tiers/glad/glad.c
         include/engine/core/input/InputFactory.h
         include/engine/core/AContextObject.h
         src/engine/core/input/AInput.cpp
+        include/engine/ecs/core/World.h
+        include/engine/ecs/components/Position.h
+        include/engine/ecs/components/Meta.h
+        include/engine/ecs/core/ComponentSparseSet.h
+        include/engine/ecs/components/Scale.h
+        include/engine/ecs/components/Rotation.h
+        include/engine/ecs/components/Transform.h
+        include/engine/ecs/core/IComponentSparseSet.h
+        include/engine/ecs/core/ISystem.h
+        include/engine/ecs/core/ECSTypes.h
+        src/engine/ecs/systems/SystemManager.cpp
+        include/engine/ecs/core/SystemManager.h
 )
 
 target_link_libraries(xp glfw)

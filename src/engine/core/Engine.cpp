@@ -1,6 +1,7 @@
 #include "../../../include/engine/core/Engine.h"
 
 #include "engine/core/input/InputGLFW.h"
+#include "engine/ecs/components/Position.h"
 
 // TEST VARIABLES --------------------------------------------------------
 
@@ -83,11 +84,18 @@ Engine::Engine(int screenWidth, int screenHeight, const char* title) {
     EWindowBackend windowBackend = EWindowBackend::GLFW;
     AWindow* window = WindowFactory::create(windowBackend, screenWidth, screenHeight, title);
     AInput* input = InputFactory::create(windowBackend, window);
-    context = new Context(new Time(), window, input);
+    context = new Context{new Time(), window, input};
     AInput::registerKeyCallback(window, &AWindow::closeCallback);
     AInput::registerKeyCallback(window, &AWindow::polygonModeCallback);
     camera = new Camera();
     camera->initialize(context);
+    worlds.resize(10);
+    worlds[0] = new World();
+    for (auto i = 0; i < 10; i++) {
+        auto entity = worlds[0]->createEntity();
+        Position pos = {static_cast<float>(i),1,1};
+        worlds[0]->addComponent(entity, pos);
+    }
 }
 
 void Engine::run() {
