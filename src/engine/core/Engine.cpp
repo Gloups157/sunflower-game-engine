@@ -1,19 +1,7 @@
 #include "../../../include/engine/core/Engine.h"
 
-#include "engine/core/input/InputGLFW.h"
-#include "engine/ecs/components/Position.h"
-
-// TEST VARIABLES --------------------------------------------------------
-
-bool wireframeMode = false;
-
-// float vertices[] = {
-//     // Position(XYZ)    Color(RGB)  Texture coordinates(ST)
-//     0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,
-//     0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
-//     -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-//     -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-// };
+#include "../ecs/systems/DummySystem.h"
+#include "../ecs/systems/MovementSystem.h"
 
 float vertices[] = {
     // Back
@@ -65,7 +53,7 @@ unsigned int indices[] = {
     1, 2, 3 // Triangle 2
 };
 
-glm::vec3 cubePositions[] = {
+std::vector<glm::vec3> cubePositions = {
     glm::vec3( 0.0f, 0.0f, 0.0f),
     glm::vec3( 2.0f, 5.0f, -15.0f),
     glm::vec3(-1.5f, -2.2f, -2.5f),
@@ -80,6 +68,8 @@ glm::vec3 cubePositions[] = {
 
 // -----------------------------------------------------------------------
 
+World* w1;
+
 Engine::Engine(int screenWidth, int screenHeight, const char* title) {
     EWindowBackend windowBackend = EWindowBackend::GLFW;
     AWindow* window = WindowFactory::create(windowBackend, screenWidth, screenHeight, title);
@@ -89,13 +79,32 @@ Engine::Engine(int screenWidth, int screenHeight, const char* title) {
     AInput::registerKeyCallback(window, &AWindow::polygonModeCallback);
     camera = new Camera();
     camera->initialize(context);
-    worlds.resize(10);
-    worlds[0] = new World();
-    for (auto i = 0; i < 10; i++) {
-        auto entity = worlds[0]->createEntity();
-        Position pos = {static_cast<float>(i),1,1};
-        worlds[0]->addComponent(entity, pos);
+    w1 = &universe.createWorld();
+    for (int i = 0; i < 10; i++) {
+        Entity e1 = w1->getEntityManager()->createEntity();
+        Meta m = {"monde" + std::to_string(i) };
+        Transform t={
+            glm::vec3((float)(rand()) / (float)(rand()), (float)(rand()) / (float)(rand()), (float)(rand()) / (float)(rand())),
+            glm::vec3(1.0f, 0.0f, 0.0f),
+            glm::vec3(1.0f, 1.0f, 1.0f)
+        };
+        w1->getEntityManager()->addComponent(e1, m);
+        w1->getEntityManager()->addComponent(e1, t);
     }
+    Entity e1 = w1->getEntityManager()->createEntity();
+    Meta m = {"controller" };
+    Transform t={
+        glm::vec3(1.0f, 0.0f, 0.0f),
+        glm::vec3(1.0f, 0.0f, 0.0f),
+        glm::vec3(1.0f, 1.0f, 1.0f)
+    };
+    w1->getEntityManager()->addComponent(e1, m);
+    w1->getEntityManager()->addComponent(e1, t);
+    universe.enableWorld(0);
+    auto sys = new MovementSystem(0, w1->getEntityManager());
+    universe.registerSystem(new DummySystem(0, w1->getEntityManager()), 0);
+    universe.registerSystem(sys, 0);
+    AInput::registerKeyCallback(sys, &MovementSystem::move);
 }
 
 void Engine::run() {
@@ -117,7 +126,7 @@ void Engine::run() {
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
     Texture texture1("../ressources/textures/brick.jpg");
-    Texture texture2("../ressources/textures/moss.jpg");
+    Texture texture2("../ressources/textures/minecraft_diamond.png");
 
     Shader shader("../ressources/shaders/vertex/rainbow.vert", "../ressources/shaders/fragment/rainbow.frag");
 
@@ -135,16 +144,22 @@ void Engine::run() {
         context->time->tick();
         context->input->update();
         context->window->clear();
-
+        universe.update();
         texture1.use(GL_TEXTURE0);
         texture2.use(GL_TEXTURE1);
         glBindVertexArray(0);
         glBindVertexArray(vao);
-        for(unsigned int i = 0; i < 10; i++) {
+        for(unsigned int i = 0; i < 11; i++) {
             model = glm::mat4(1.0f);
-            model = glm::translate(model, cubePositions[i]);
-            float angle = 20.0f * i + 15.0f;
-            model = glm::rotate(model, glm::radians(angle * (float)glfwGetTime()), glm::vec3(1.0f, 0.3f, 0.5f));
+            model = glm::translate(model, universe.getWorld(0).getEntityManager()->getComponent<Transform>(i).position);
+            // if (i != 10) {
+            //     // model = glm::translate(model, cubePositions[i]);
+            //     // float angle = 20.0f * i + 15.0f;
+            //     // model = glm::rotate(model, glm::radians(angle * (float)glfwGetTime()), glm::vec3(1.0f, 0.3f, 0.5f));
+            // }
+            // else {
+            //
+            // }
 
             shader.use();
             shader.setInt("tex1", 0);

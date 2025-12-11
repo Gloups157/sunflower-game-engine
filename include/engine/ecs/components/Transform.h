@@ -1,14 +1,12 @@
 #ifndef TRANSFORM_H
 #define TRANSFORM_H
 
-#include "Position.h"
-#include "Rotation.h"
-#include "Scale.h"
+#include <glm/vec3.hpp>
 
 struct Transform {
-    Position position;
-    Rotation rotation;
-    Scale scale;
+    glm::vec3 position;
+    glm::vec3 rotation;
+    glm::vec3 scale;
 };
 
 #endif //TRANSFORM_H

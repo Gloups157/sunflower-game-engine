@@ -5,9 +5,9 @@
 #include "input/AInput.h"
 
 struct Context {
-    Time* const time;
-    AWindow* const window;
-    AInput* const input;
+    Time* time;
+    AWindow* window;
+    AInput* input;
 };
 
 #endif //CONTEXT_H

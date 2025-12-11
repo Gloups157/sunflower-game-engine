@@ -10,25 +10,21 @@
 #include "Context.h"
 #include "window/WindowFactory.h"
 #include "input//InputFactory.h"
-#include "../ecs/core/World.h"
 #include "Camera.h"
+#include "engine/ecs/core/Universe.h"
 #include "engine/graphics/Shader.h"
 #include "engine/graphics/Texture.h"
+#include "engine/ecs/components/Meta.h"
+#include "engine/ecs/components/Transform.h"
 
 class Engine {
 public:
     Engine(int screenWidth, int screenHeight, const char* title);
     void run();
-    void initialize();
-    void start();
-    void enable();
-    void disable();
-    void update();
     void quit();
 private:
     Context* context;
-    std::vector<World*> worlds;
-    std::vector<World> activeWorlds;
+    Universe universe;
     Camera* camera;
 };
 

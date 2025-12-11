@@ -36,18 +36,30 @@ add_executable(xp src/main.cpp src/tiers/glad/glad.c
         include/engine/core/input/InputFactory.h
         include/engine/core/AContextObject.h
         src/engine/core/input/AInput.cpp
-        include/engine/ecs/core/World.h
-        include/engine/ecs/components/Position.h
         include/engine/ecs/components/Meta.h
         include/engine/ecs/core/ComponentSparseSet.h
-        include/engine/ecs/components/Scale.h
-        include/engine/ecs/components/Rotation.h
         include/engine/ecs/components/Transform.h
         include/engine/ecs/core/IComponentSparseSet.h
-        include/engine/ecs/core/ISystem.h
+        include/engine/ecs/core/ILifeCycle.h
         include/engine/ecs/core/ECSTypes.h
-        src/engine/ecs/systems/SystemManager.cpp
+        src/engine/ecs/core/SystemManager.cpp
         include/engine/ecs/core/SystemManager.h
+        src/engine/ecs/core/EntityManager.cpp
+        include/engine/ecs/core/EntityManager.h
+        include/engine/ecs/core/ASystem.h
+        src/engine/ecs/core/ASystem.cpp
+        src/engine/ecs/core/World.cpp
+        include/engine/ecs/core/World.h
+        src/engine/ecs/core/Universe.cpp
+        include/engine/ecs/core/Universe.h
+        include/utils/SparseSet.cpp
+        include/utils/SparseSet.h
+        src/engine/ecs/core/Query.cpp
+        include/engine/ecs/core/Query.h
+        src/engine/ecs/systems/DummySystem.cpp
+        src/engine/ecs/systems/DummySystem.h
+        src/engine/ecs/systems/MovementSystem.cpp
+        src/engine/ecs/systems/MovementSystem.h
 )
 
 target_link_libraries(xp glfw)

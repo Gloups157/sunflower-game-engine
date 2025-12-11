@@ -2,25 +2,32 @@
 #define SYSTEM_MANAGER_H
 
 #include <vector>
-#include "ISystem.h"
+#include <algorithm>
+#include <memory>
 
-class SystemManager : ISystem {
+#include "ASystem.h"
+
+class SystemManager {
 public:
-    void initialize() override;
-    void start() override;
-    void enable() override;
-    void disable() override;
-    void update() override;
-    void fixedUpdate() override;
-    void lateUpdate() override;
+    SystemManager();
+    ~SystemManager() = default;
+
+    void update() {
+        systems[0]->update();
+    }
+
+    void registerSystem(ASystem* system) {
+        systems.emplace_back(system);
+    }
+
+    void unregisterSystem(ASystem* system) {
+        auto systemIterator = std::find(systems.begin(), systems.end(), system);
+        if (systemIterator != systems.end()) {
+            systems.erase(systemIterator);
+        }
+    }
 private:
-    std::vector<VoidCallback> initializeCallbacks;
-    std::vector<VoidCallback> startCallbacks;
-    std::vector<VoidCallback> enableCallbacks;
-    std::vector<VoidCallback> disableCallbacks;
-    std::vector<VoidCallback> updateCallbacks;
-    std::vector<VoidCallback> fixedUpdateCallbacks;
-    std::vector<VoidCallback> lateUpdateCallbacks;
+    std::vector<ASystem*> systems;
 };
 
 #endif //SYSTEM_MANAGER_H

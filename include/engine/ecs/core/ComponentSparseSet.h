@@ -4,12 +4,12 @@
 #include <cassert>
 #include <unordered_map>
 #include <vector>
-#include "../IComponentSparseSet.h"
+#include "IComponentSparseSet.h"
 
 template<typename T>
 class ComponentSparseSet : public IComponentSparseSet {
 public:
-    explicit ComponentSparseSet(size_t capacity = 0) {
+    explicit ComponentSparseSet(size_t capacity = MAX_ENTITIES) {
         components.reserve(capacity);
         indexToEntity.reserve(capacity);
         entityToIndex.reserve(capacity);
@@ -20,6 +20,12 @@ public:
             entityToIndex[entity] = size();
             components.emplace_back(component);
             indexToEntity.emplace_back(entity);
+        }
+    }
+
+    void copyComponent(const Entity source, const Entity destination) override {
+        if (hasComponent(source) && !hasComponent(destination)) {
+            addComponent(destination, getComponent(source));
         }
     }
 
@@ -37,21 +43,19 @@ public:
         }
     }
 
-    void copyComponent(const Entity source, const Entity destination) {
-        if (hasComponent(source) and !hasComponent(destination)) {
-            addComponent(destination, getComponent(source));
-        }
-    }
-
-    bool hasComponent(const Entity entity) const {
+    bool hasComponent(const Entity entity) override {
         return entityToIndex.find(entity) != entityToIndex.end();
     }
 
-    size_t size() const {
+    Entity getEntityAt(const Index index) override {
+        return indexToEntity[index];
+    }
+
+    size_t size() override {
         return components.size();
     }
 
-    size_t capacity() const {
+    size_t capacity() override {
         return components.capacity();
     }
 
@@ -63,7 +67,6 @@ public:
     std::vector<T>& getComponents() {
         return components;
     }
-
 private:
     // Dense
     std::vector<T> components;
