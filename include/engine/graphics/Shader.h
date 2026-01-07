@@ -1,19 +1,14 @@
 #ifndef SHADER_H
 #define SHADER_H
 
-#include <fstream>
-#include <iostream>
-#include <sstream>
 #include <string>
 #include <glm/fwd.hpp>
-#include <glm/vec2.hpp>
-#include <glm/vec3.hpp>
-#include <glm/gtc/type_ptr.hpp>
-#include "tiers/glad/glad.h"
+#include "OpenGLCore.h"
 
 class Shader {
 public:
-    Shader(const char* vertexPath, const char* fragmentPath);
+    Shader();
+    void initialize(const char* vertexPath, const char* fragmentPath);
     void use();
     void setBool(const std::string &name, bool value) const;
     void setInt(const std::string &name, int value) const;

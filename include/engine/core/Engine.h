@@ -1,21 +1,8 @@
 #ifndef ENGINE_H
 #define ENGINE_H
 
-#include <iostream>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
-#include "../include/tiers/glad/glad.h"
-#include "GLFW/glfw3.h"
-#include "Context.h"
-#include "window/WindowFactory.h"
-#include "input//InputFactory.h"
 #include "Camera.h"
 #include "engine/ecs/core/Universe.h"
-#include "engine/graphics/Shader.h"
-#include "engine/graphics/Texture.h"
-#include "engine/ecs/components/Meta.h"
-#include "engine/ecs/components/Transform.h"
 
 class Engine {
 public:
@@ -23,9 +10,13 @@ public:
     void run();
     void quit();
 private:
-    Context* context;
+    EngineContext context;
     Universe universe;
     Camera* camera;
+
+    std::vector<Texture> textures1;
+    std::vector<Texture> textures2;
+    Shader shader;
 };
 
 #endif //ENGINE_H

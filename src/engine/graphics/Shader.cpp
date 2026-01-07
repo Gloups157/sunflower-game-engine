@@ -1,6 +1,15 @@
 #include "engine/graphics/Shader.h"
 
-Shader::Shader(const char *vertexPath, const char *fragmentPath) {
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <glm/gtc/type_ptr.hpp>
+
+Shader::Shader() {
+
+}
+
+void Shader::initialize(const char *vertexPath, const char *fragmentPath) {
     std::string vertexShaderString;
     std::string fragmentShaderString;
     std::ifstream vertexShaderFile;

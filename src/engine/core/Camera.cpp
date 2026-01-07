@@ -1,17 +1,19 @@
 #include "../../../include/engine/core/Camera.h"
 
-Camera::Camera():
+#include <glm/ext/matrix_transform.hpp>
+#include <glm/ext/matrix_clip_space.hpp>
+
+Camera::Camera(EngineContext* context):
+    context(context),
     yaw(-90.0f),
     pitch(0.0f),
     fov(45.0f),
     speed(6.0f),
     position(0.0f, 0.0f, 3.0f),
     frontDirection(0.0f, 0.0f, -1.0f),
-    upDirection(0.0f, 1.0f, 0.0f) {
-}
+    upDirection(0.0f, 1.0f, 0.0f) {}
 
-void Camera::initialize(Context* context) {
-    AContextObject::initialize(context);
+void Camera::initialize() {
     AInput::registerKeyCallback(this, &Camera::move);
     AInput::registerMouseDeltaCallback(this, &Camera::look);
     AInput::registerMouseScrollCallback(this, &Camera::zoom);

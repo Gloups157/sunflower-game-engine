@@ -1,7 +1,7 @@
 #ifndef E_MOUSE_BUTTON_H
 #define E_MOUSE_BUTTON_H
 
-#include <GLFW/glfw3.h>
+#include "engine/graphics/OpenGLCore.h"
 
 enum class EMouseButton {
     LEFT = GLFW_MOUSE_BUTTON_LEFT,

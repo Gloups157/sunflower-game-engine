@@ -1,5 +1,6 @@
 #ifndef INPUT_GLFW_H
 #define INPUT_GLFW_H
+
 #include "AInput.h"
 
 class InputGLFW : public AInput {

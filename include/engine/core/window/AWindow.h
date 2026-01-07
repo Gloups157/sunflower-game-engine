@@ -1,10 +1,7 @@
 #ifndef A_WINDOW_H
 #define A_WINDOW_H
 
-#include <iostream>
-#include <ostream>
 #include "WindowSettings.h"
-#include "../input/AInput.h"
 #include "../input/EKey.h"
 
 class AWindow {

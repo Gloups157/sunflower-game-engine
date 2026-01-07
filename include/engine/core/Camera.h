@@ -1,25 +1,20 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-#include <iostream>
-#include <ostream>
 #include <glm/vec3.hpp>
 #include <glm/glm.hpp>
-#include <glm/ext/matrix_transform.hpp>
-#include <glm/ext/matrix_clip_space.hpp>
-#include "AContextObject.h"
-#include "Time.h"
-#include "engine/core/window/AWindow.h"
+#include "EngineContext.h"
 #include "input/AInput.h"
 
-class Camera : public AContextObject {
+class Camera {
 public:
-    Camera();
-    void initialize(Context* context) override;
+    Camera(EngineContext* context);
+    void initialize();
     glm::mat4 view();
     glm::mat4 project();
 
 private:
+    EngineContext* context;
     float yaw;
     float pitch;
     float fov;

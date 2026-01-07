@@ -19,8 +19,8 @@ add_executable(xp src/main.cpp src/tiers/glad/glad.c
         include/engine/core/Camera.h
         include/engine/core/window/AWindow.h
         include/engine/core/input/AInput.h
-        src/engine/core/Time.cpp
-        include/engine/core/Time.h
+        src/engine/core/time/ATime.cpp
+        include/engine/core/time/ATime.h
         include/engine/core/input/EKey.h
         include/engine/core/input/InputInfo.h
         include/engine/core/input/EInputState.h
@@ -30,11 +30,10 @@ add_executable(xp src/main.cpp src/tiers/glad/glad.c
         include/engine/core/window/WindowSettings.h
         src/engine/core/input/InputGLFW.cpp
         include/engine/core/input/InputGLFW.h
-        include/engine/core/Context.h
+        include/engine/core/EngineContext.h
         include/engine/core/window/EWindowBackend.h
         include/engine/core/window/WindowFactory.h
         include/engine/core/input/InputFactory.h
-        include/engine/core/AContextObject.h
         src/engine/core/input/AInput.cpp
         include/engine/ecs/components/Meta.h
         include/engine/ecs/core/ComponentSparseSet.h
@@ -52,14 +51,21 @@ add_executable(xp src/main.cpp src/tiers/glad/glad.c
         include/engine/ecs/core/World.h
         src/engine/ecs/core/Universe.cpp
         include/engine/ecs/core/Universe.h
-        include/utils/SparseSet.cpp
-        include/utils/SparseSet.h
         src/engine/ecs/core/Query.cpp
         include/engine/ecs/core/Query.h
         src/engine/ecs/systems/DummySystem.cpp
-        src/engine/ecs/systems/DummySystem.h
+        include/engine/ecs/systems/DummySystem.h
         src/engine/ecs/systems/MovementSystem.cpp
-        src/engine/ecs/systems/MovementSystem.h
+        include/engine/ecs/systems/MovementSystem.h
+        src/engine/graphics/IRenderer.cpp
+        include/engine/graphics/IRenderer.h
+        src/engine/graphics/RendererOpenGL.cpp
+        include/engine/graphics/RendererOpenGL.h
+        src/engine/core/time/TimeGLFW.cpp
+        include/engine/core/time/TimeGLFW.h
+        include/engine/core/time/TimeFactory.cpp
+        include/engine/core/time/TimeFactory.h
+        include/engine/graphics/OpenGLCore.h
 )
 
 target_link_libraries(xp glfw)

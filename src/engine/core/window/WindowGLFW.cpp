@@ -1,5 +1,7 @@
 #include "engine/core/window/WindowGLFW.h"
 
+#include <iostream>
+
 WindowGLFW::WindowGLFW(int screenWidth, int screenHeight, const char *title) {
     windowSettings = new WindowSettings(screenWidth, screenHeight, title);
 }

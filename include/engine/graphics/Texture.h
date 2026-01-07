@@ -9,8 +9,9 @@ class Texture {
 public:
     Texture(char const* filename);
     void use(GLenum layer);
-private:
     unsigned int id;
+private:
+
 
     unsigned int create(char const* filename);
 };

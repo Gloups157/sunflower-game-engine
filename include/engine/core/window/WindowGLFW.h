@@ -2,9 +2,7 @@
 #define WINDOW_GLFW_H
 
 #include "AWindow.h"
-#include "tiers/glad/glad.h"
-#define GLFW_INCLUDE_NONE
-#include <GLFW/glfw3.h>
+#include "engine/graphics/OpenGLCore.h"
 
 class WindowGLFW : public AWindow {
 public:
