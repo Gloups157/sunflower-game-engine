@@ -34,7 +34,6 @@ add_executable(xp src/main.cpp src/tiers/glad/glad.c
         include/engine/core/window/EWindowBackend.h
         include/engine/core/window/WindowFactory.h
         include/engine/core/input/InputFactory.h
-        src/engine/core/input/AInput.cpp
         include/engine/ecs/components/Meta.h
         include/engine/ecs/core/ComponentSparseSet.h
         include/engine/ecs/components/Transform.h
@@ -66,6 +65,9 @@ add_executable(xp src/main.cpp src/tiers/glad/glad.c
         include/engine/core/time/TimeFactory.cpp
         include/engine/core/time/TimeFactory.h
         include/engine/graphics/OpenGLCore.h
+        include/engine/graphics/ERendererBackend.h
+        include/engine/graphics/RendererFactory.h
+        src/engine/core/input/AInput.cpp
 )
 
 target_link_libraries(xp glfw)

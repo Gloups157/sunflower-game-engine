@@ -12,10 +12,10 @@ void DummySystem::start() {
 void DummySystem::update() {
     auto results = query.search<Transform, Meta>();
     for (auto& [entity, transform, meta] : results) {
-        if (transform.position.x >= 100.0f) {
+        if (transform.position.x >= 12.0f) {
             transform.rotation.x = -transform.rotation.x;
         }
-        if (transform.position.x <= -100.0f) {
+        if (transform.position.x <= -12.0f) {
             transform.rotation.x = -transform.rotation.x;
         }
         if (meta.name != "controller")

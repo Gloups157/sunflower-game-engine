@@ -14,9 +14,9 @@ Camera::Camera(EngineContext* context):
     upDirection(0.0f, 1.0f, 0.0f) {}
 
 void Camera::initialize() {
-    AInput::registerKeyCallback(this, &Camera::move);
-    AInput::registerMouseDeltaCallback(this, &Camera::look);
-    AInput::registerMouseScrollCallback(this, &Camera::zoom);
+    context->input->registerKeyCallback(this, &Camera::move);
+    context->input->registerMouseDeltaCallback(this, &Camera::look);
+    context->input->registerMouseScrollCallback(this, &Camera::zoom);
 }
 
 glm::mat4 Camera::view() {

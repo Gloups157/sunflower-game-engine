@@ -2,12 +2,13 @@
 
 void InputGLFW::initialize(void* nativeWindow) {
     auto native = static_cast<GLFWwindow*>(nativeWindow);
+    glfwSetWindowUserPointer(native, this);
     AInput::initialize(nativeWindow);
     glfwSetInputMode(native, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-    glfwSetKeyCallback(native, updateKeyCallbacks);
-    glfwSetMouseButtonCallback(native, updateMouseButtonCallbacks);
-    glfwSetCursorPosCallback(native, updateMouseCallbacks);
-    glfwSetScrollCallback(native, updateMouseScrollCallbacks);
+    glfwSetKeyCallback(native, &InputGLFW::updateKeyCallbacks);
+    glfwSetMouseButtonCallback(native, &InputGLFW::updateMouseButtonCallbacks);
+    glfwSetCursorPosCallback(native, &InputGLFW::updateMouseCallbacks);
+    glfwSetScrollCallback(native, &InputGLFW::updateMouseScrollCallbacks);
 }
 
 void InputGLFW::update() {
@@ -15,46 +16,54 @@ void InputGLFW::update() {
 }
 
 void InputGLFW::updateKeyCallbacks(GLFWwindow* window, int key, int scancode, int action, int mods) {
+    auto* instance = getInstanceFromWindow(window);
     EKey keyTranslated = translateGLFWKey(key);
-    auto keyInfo = keys.find(keyTranslated)->second;
-    keyInfo->update(translateGLFWInputState(action));
-    for (auto& callback : keyCallbacks) {
+    auto keyInfo = instance->keys.find(keyTranslated)->second;
+    keyInfo.update(translateGLFWInputState(action));
+    for (auto& callback : instance->keyCallbacks) {
         callback(keyTranslated);
     }
 }
 
 void InputGLFW::updateMouseButtonCallbacks(GLFWwindow *window, int button, int action, int mods) {
+    auto* instance = getInstanceFromWindow(window);
     auto mouseButton = static_cast<EMouseButton>(button);
-    auto mouseButtonInfo = mouseButtons.find(mouseButton)->second;
-    mouseButtonInfo->update(translateGLFWInputState(action));
-    for (auto& callback : mouseButtonCallbacks) {
+    auto mouseButtonInfo = instance->mouseButtons.find(mouseButton)->second;
+    mouseButtonInfo.update(translateGLFWInputState(action));
+    for (auto& callback : instance->mouseButtonCallbacks) {
         callback(mouseButton);
     }
 }
 
 void InputGLFW::updateMouseCallbacks(GLFWwindow* window, double xpos, double ypos) {
-    mousePositionX = static_cast<float>(xpos);
-    mousePositionY = static_cast<float>(ypos);
-    const float mouseDeltaX = mousePositionX - mousePositionLastX;
-    const float mouseDeltaY = mousePositionLastY - mousePositionY;
-    mousePositionLastX = mousePositionX;
-    mousePositionLastY = mousePositionY;
+    auto* instance = getInstanceFromWindow(window);
+    instance->mousePositionX = static_cast<float>(xpos);
+    instance->mousePositionY = static_cast<float>(ypos);
+    const float mouseDeltaX = instance->mousePositionX - instance->mousePositionLastX;
+    const float mouseDeltaY = instance->mousePositionLastY - instance->mousePositionY;
+    instance->mousePositionLastX = instance->mousePositionX;
+    instance->mousePositionLastY = instance->mousePositionY;
     // Process position callbacks
-    for (auto& callback : mousePositionCallbacks) {
-        callback(mousePositionX, mousePositionY);
+    for (auto& callback : instance->mousePositionCallbacks) {
+        callback(instance->mousePositionX, instance->mousePositionY);
     }
     // Process delta callbacks
-    for (auto& callback : mouseDeltaCallbacks) {
+    for (auto& callback : instance->mouseDeltaCallbacks) {
         callback(mouseDeltaX, mouseDeltaY);
     }
 }
 
 void InputGLFW::updateMouseScrollCallbacks(GLFWwindow* window, double xoffset, double yoffset) {
-    mouseScrollX = static_cast<float>(xoffset);
-    mouseScrollY = static_cast<float>(yoffset);
-    for (auto& callback : mouseScrollCallbacks) {
-        callback(mouseScrollX, mouseScrollY);
+    auto* instance = getInstanceFromWindow(window);
+    instance->mouseScrollX = static_cast<float>(xoffset);
+    instance->mouseScrollY = static_cast<float>(yoffset);
+    for (auto& callback : instance->mouseScrollCallbacks) {
+        callback(instance->mouseScrollX, instance->mouseScrollY);
     }
+}
+
+InputGLFW* InputGLFW::getInstanceFromWindow(GLFWwindow* window) {
+    return static_cast<InputGLFW*>(glfwGetWindowUserPointer(window));
 }
 
 EKey InputGLFW::translateGLFWKey(const int key) {

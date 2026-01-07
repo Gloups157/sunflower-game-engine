@@ -14,6 +14,7 @@ private:
     Universe universe;
     Camera* camera;
 
+    // Test
     std::vector<Texture> textures1;
     std::vector<Texture> textures2;
     Shader shader;
