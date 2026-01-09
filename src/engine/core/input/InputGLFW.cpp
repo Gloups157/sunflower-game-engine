@@ -18,7 +18,7 @@ void InputGLFW::update() {
 void InputGLFW::updateKeyCallbacks(GLFWwindow* window, int key, int scancode, int action, int mods) {
     auto* instance = getInstanceFromWindow(window);
     EKey keyTranslated = translateGLFWKey(key);
-    auto keyInfo = instance->keys.find(keyTranslated)->second;
+    auto& keyInfo = instance->keys.find(keyTranslated)->second;
     keyInfo.update(translateGLFWInputState(action));
     for (auto& callback : instance->keyCallbacks) {
         callback(keyTranslated);
@@ -28,7 +28,7 @@ void InputGLFW::updateKeyCallbacks(GLFWwindow* window, int key, int scancode, in
 void InputGLFW::updateMouseButtonCallbacks(GLFWwindow *window, int button, int action, int mods) {
     auto* instance = getInstanceFromWindow(window);
     auto mouseButton = static_cast<EMouseButton>(button);
-    auto mouseButtonInfo = instance->mouseButtons.find(mouseButton)->second;
+    auto& mouseButtonInfo = instance->mouseButtons.find(mouseButton)->second;
     mouseButtonInfo.update(translateGLFWInputState(action));
     for (auto& callback : instance->mouseButtonCallbacks) {
         callback(mouseButton);

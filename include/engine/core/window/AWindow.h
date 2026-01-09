@@ -7,14 +7,15 @@
 class AWindow {
 public:
     virtual ~AWindow() = default;
+
     virtual void initialize() = 0;
     virtual void clear() = 0;
     virtual void draw() = 0;
+    virtual void close() = 0;
     virtual void quit() = 0;
     virtual bool isActive() = 0;
-    virtual void closeCallback(EKey key) = 0;
-    virtual void polygonModeCallback(EKey key) = 0;
     virtual void* getNative() = 0;
+
     int getScreenWidth() const {
         return windowSettings->screenWidth;
     }
@@ -27,6 +28,7 @@ public:
     WindowSettings getWindowSettings() const {
         return *windowSettings;
     }
+
 protected:
     WindowSettings* windowSettings = nullptr;
 };

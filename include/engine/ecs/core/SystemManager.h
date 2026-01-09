@@ -13,7 +13,9 @@ public:
     ~SystemManager() = default;
 
     void update() {
-        systems[0]->update();
+        for (ASystem* system : systems) {
+            system->update();
+        }
     }
 
     void registerSystem(ASystem* system) {

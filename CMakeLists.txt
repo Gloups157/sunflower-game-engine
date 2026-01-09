@@ -68,6 +68,9 @@ add_executable(xp src/main.cpp src/tiers/glad/glad.c
         include/engine/graphics/ERendererBackend.h
         include/engine/graphics/RendererFactory.h
         src/engine/core/input/AInput.cpp
+        include/engine/ecs/components/View.h
+        src/engine/ecs/systems/ViewSystem.cpp
+        include/engine/ecs/systems/ViewSystem.h
 )
 
 target_link_libraries(xp glfw)

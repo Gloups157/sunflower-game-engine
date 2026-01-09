@@ -10,11 +10,11 @@ public:
     void initialize() override;
     void clear() override;
     void draw() override;
+    void close() override;
     void quit() override;
-    void closeCallback(EKey key) override;
-    void polygonModeCallback(EKey key) override;
     bool isActive() override;
     void* getNative() override;
+
 private:
     GLFWwindow* native = nullptr;
 

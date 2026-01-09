@@ -1,7 +1,6 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-#include <glm/vec3.hpp>
 #include <glm/glm.hpp>
 #include "EngineContext.h"
 #include "input/AInput.h"
@@ -12,6 +11,7 @@ public:
     void initialize();
     glm::mat4 view();
     glm::mat4 project();
+    void move();
 
 private:
     EngineContext* context;
@@ -23,7 +23,6 @@ private:
     glm::vec3 frontDirection;
     glm::vec3 upDirection;
 
-    void move(EKey key);
     void look(float x, float y);
     void zoom(float x, float y);
 };

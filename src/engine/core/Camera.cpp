@@ -14,7 +14,6 @@ Camera::Camera(EngineContext* context):
     upDirection(0.0f, 1.0f, 0.0f) {}
 
 void Camera::initialize() {
-    context->input->registerKeyCallback(this, &Camera::move);
     context->input->registerMouseDeltaCallback(this, &Camera::look);
     context->input->registerMouseScrollCallback(this, &Camera::zoom);
 }
@@ -27,27 +26,25 @@ glm::mat4 Camera::project() {
     return glm::perspective(glm::radians(fov), context->window->getRatio(), 0.1f, 100.0f);
 }
 
-void Camera::move(EKey key) {
+void Camera::move() {
     const float cameraSpeed = speed * context->time->getDeltaTime();
-    switch (key) {
-        case EKey::W:
-            position += cameraSpeed * frontDirection;
-            break;
-        case EKey::S:
-            position -= cameraSpeed * frontDirection;
-            break;
-        case EKey::A:
-            position -= glm::normalize(glm::cross(frontDirection, upDirection)) * cameraSpeed;
-            break;
-        case EKey::D:
-            position += glm::normalize(glm::cross(frontDirection, upDirection)) * cameraSpeed;
-            break;
-        case EKey::SPACE:
-            position += cameraSpeed * upDirection;
-            break;
-        case EKey::CONTROL:
-            position -= cameraSpeed * upDirection;
-            break;
+    if (context->input->isKeyPressed(EKey::W)) {
+        position += cameraSpeed * frontDirection;
+    }
+    if (context->input->isKeyPressed(EKey::S)) {
+        position -= cameraSpeed * frontDirection;
+    }
+    if (context->input->isKeyPressed(EKey::A)) {
+        position -= glm::normalize(glm::cross(frontDirection, upDirection)) * cameraSpeed;
+    }
+    if (context->input->isKeyPressed(EKey::D)) {
+        position += glm::normalize(glm::cross(frontDirection, upDirection)) * cameraSpeed;
+    }
+    if (context->input->isKeyPressed(EKey::SPACE)) {
+        position += cameraSpeed * upDirection;
+    }
+    if (context->input->isKeyPressed(EKey::CONTROL)) {
+        position -= cameraSpeed * upDirection;
     }
 }
 

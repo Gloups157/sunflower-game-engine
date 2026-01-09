@@ -18,6 +18,8 @@ private:
     std::vector<Texture> textures1;
     std::vector<Texture> textures2;
     Shader shader;
+
+    void initializeMocks();
 };
 
 #endif //ENGINE_H

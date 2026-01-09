@@ -9,9 +9,9 @@ class IRenderer {
 public:
     virtual ~IRenderer() = default;
     virtual void createCube() = 0;
-    virtual void createTriangle() = 0;
+    virtual void createSprite() = 0;
     virtual void drawCube(const glm::mat4& model, Shader& shader, std::vector<Texture>& textures, const glm::mat4& cameraView, const glm::mat4& cameraProjection) = 0;
-    virtual void drawTriangle() = 0;
+    virtual void drawSprite(const glm::mat4& model, Shader& shader, std::vector<Texture>& textures, const glm::mat4& cameraView, const glm::mat4& cameraProjection) = 0;
 };
 
 #endif //I_RENDERER_H

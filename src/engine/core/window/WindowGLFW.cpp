@@ -35,6 +35,10 @@ void WindowGLFW::draw() {
     glfwSwapBuffers(native);
 }
 
+void WindowGLFW::close() {
+    glfwSetWindowShouldClose(native, true);
+}
+
 void WindowGLFW::quit() {
     glfwTerminate();
 }
@@ -49,23 +53,4 @@ void* WindowGLFW::getNative() {
 
 void WindowGLFW::framebufferSizeCallback(GLFWwindow* window, int width, int height) {
     glViewport(0, 0, width, height);
-}
-
-void WindowGLFW::closeCallback(EKey key) {
-    if(key == EKey::ESCAPE) {
-        glfwSetWindowShouldClose(native, true);
-    }
-}
-
-void WindowGLFW::polygonModeCallback(EKey key) {
-    if(key == EKey::TAB) {
-        if (windowSettings->wireframeMode) {
-            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-            windowSettings->wireframeMode = false;
-        }
-        else {
-            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-            windowSettings->wireframeMode = true;
-        }
-    }
 }

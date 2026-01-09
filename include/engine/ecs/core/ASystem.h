@@ -3,6 +3,7 @@
 
 #include "ILifeCycle.h"
 #include "ECSTypes.h"
+#include "engine/core/EngineContext.h"
 #include "Query.h"
 
 class ASystem : public ILifeCycle {
@@ -17,6 +18,7 @@ public:
     Priority getPriority() const;
 protected:
     Priority priority;
+    EngineContext* context;
     Query query;
 };
 
