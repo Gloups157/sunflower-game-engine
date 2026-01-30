@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 4.0)
-project(xp)
+project(Essai)
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -7,7 +7,7 @@ find_package(glfw3 REQUIRED)
 
 include_directories(include)
 
-add_executable(xp src/main.cpp src/tiers/glad/glad.c
+add_executable(Essai src/main.cpp src/tiers/glad/glad.c
         src/application/layers/engine/graphics/Shader.cpp
         include/application/layers/engine/graphics/Shader.h
         src/application/layers/engine/graphics/Texture.cpp
@@ -86,4 +86,4 @@ add_executable(xp src/main.cpp src/tiers/glad/glad.c
         include/utilities/containers/SparseSet.h
 )
 
-target_link_libraries(xp glfw)
+target_link_libraries(Essai glfw)
